@@ -27,6 +27,20 @@ app.get("/users/:username/:password", async (req, res) => {
   }
 });
 
+app.get("/balances/:userID", async (req, res) => {
+  try {
+    const userID = req.params.userID;
+    console.log("trying with userID: ", userID);
+    const queryResponse = await client.query(`
+    SELECT * FROM balances
+    WHERE user_id = '${userID}'`);
+    res.status(200).json(queryResponse.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(404).json({ message: "could not find user" });
+  }
+});
+
 app.get("/users", async (req, res) => {
   try {
     const queryResponse = await client.query(`
