@@ -17,6 +17,8 @@ app.get("/users/:username/:password", async (req, res) => {
     const username = req.params.username;
     const password = req.params.password;
     console.log("trying with username: ", username, "and password: ", password);
+
+    //Vulnerable query:
     const queryResponse = await client.query(`
     SELECT * FROM users
     WHERE username = '${username}' AND password = '${password}'`);
